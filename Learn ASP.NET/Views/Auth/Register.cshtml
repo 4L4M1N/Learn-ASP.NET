@@ -1,0 +1,38 @@
+﻿@model Learn_ASP.NET.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register</h2>
+<div class="col-md-12">
+    @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+       
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
+
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+        @{ 
+            string a = ViewBag.UserError;
+            if (a=="User") { <p style="color:red">User Name already Exists</p>}
+        }
+    </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            
+        </div>
+
+        <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Register" />
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

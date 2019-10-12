@@ -24,16 +24,67 @@ namespace Learn_ASP.NET.Controllers
         }
         public ActionResult Login()
         {
+
             return View();
         }
+        public ActionResult Logout()
+        {
+            if (Request.Cookies["Login"] != null)
+            {
+                Response.Cookies["Login"].Expires = DateTime.Now.AddDays(-1);
+                
+            }
+            return RedirectToAction("Login", "Auth");
+        }
+
+        public async Task<ActionResult> Dashboard()
+        {
+            if (TempData.ContainsKey("doc"))
+            {
+                return View();
+            }
+            HttpCookie loginCookie = Request.Cookies["Login"];
+            if(loginCookie!=null)
+            {
+                string name = loginCookie.Values["Name"];
+                string password = loginCookie.Values["Password"];
+                var signInStatus = await SignInManager.PasswordSignInAsync(name.ToString(), password.ToString(), true, true);
+                
+                switch(signInStatus)
+                {
+                    case SignInStatus.Success:
+                        return View();
+                    default:
+                        return RedirectToAction("Login", "Auth");
+                }
+            }
+            
+            return RedirectToAction("Login", "Auth");
+
+        }
+        
         [HttpPost]
         public async Task<ActionResult> Login(LoginViewModel model)
         {
             var signInStatus = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, true, true);
+            
             switch(signInStatus)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Index", "Home");
+                    if(model.RememberMe == true)
+                    {
+                        HttpCookie loginCookie = new HttpCookie("Login");
+                        //Set the Cookie value.
+                        loginCookie.Values["Name"] = model.UserName;
+                        loginCookie.Values["Password"] = model.Password;
+                        loginCookie.Path = Request.ApplicationPath;
+                        //Set the Expiry date.
+                        loginCookie.Expires = DateTime.Now.AddDays(1);
+                        //Add the Cookie to Browser.
+                        Response.Cookies.Add(loginCookie);
+                    }
+                    TempData["doc"] = "fromlogin";
+                    return RedirectToAction("Dashboard", "Auth");
                 default:
                     ModelState.AddModelError("", "Invalid Credentials");
                     return View(model);

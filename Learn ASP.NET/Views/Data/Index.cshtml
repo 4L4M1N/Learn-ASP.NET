@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Upload Excel file</h2>
+@using (Html.BeginForm("Result", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="form-group">
+    <label  name="fileupload" id="fileupload">Upload your file</label>
+    <input type="file" class="form-control-file" name="fileupload" id="exampleFormControlFile1">
+    <input type="submit" id="Submit" name="Submit" value="Submit" />
+</div>
+}
+@Html.Partial("_Result")
+

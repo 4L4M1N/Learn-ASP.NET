@@ -9,20 +9,25 @@
     @using (Html.BeginForm("Login", "Auth", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
 
-        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-        <span asp-validation-for="UserName" class="text-danger"></span>
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            <span asp-validation-for="UserName" class="text-danger"></span>
 
-    </div>
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
 
-        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            @Html.CheckBoxFor(m => m.RememberMe)
+             Remember Me
+        </div>
 
         <div class="form-group">
             <input type="submit" class="btn btn-success" value="Login" />

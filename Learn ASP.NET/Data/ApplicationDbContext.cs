@@ -15,7 +15,8 @@ namespace Learn_ASP.NET.Data
         {
         }
         public DbSet<User> Users { get; set; }
-       // public DbSet<Test> Test { set; get; }
+        public DbSet<DemoUser> DemoUsers { get; set; }
+                                           // public DbSet<Test> Test { set; get; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             var user = modelBuilder.Entity<User>();

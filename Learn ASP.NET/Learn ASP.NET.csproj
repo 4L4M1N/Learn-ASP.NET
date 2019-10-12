@@ -156,8 +156,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
+    <Compile Include="Extentions\Extentions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -170,7 +172,12 @@
     <Compile Include="Migrations\201910100951209_a_1.Designer.cs">
       <DependentUpon>201910100951209_a_1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910120303386_DemoUser.cs" />
+    <Compile Include="Migrations\201910120303386_DemoUser.Designer.cs">
+      <DependentUpon>201910120303386_DemoUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DemoUser.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -255,6 +262,9 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\Dashboard.cshtml" />
+    <Content Include="Views\Data\Index.cshtml" />
+    <Content Include="Views\Shared\_Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -276,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910100951209_a_1.resx">
       <DependentUpon>201910100951209_a_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910120303386_DemoUser.resx">
+      <DependentUpon>201910120303386_DemoUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

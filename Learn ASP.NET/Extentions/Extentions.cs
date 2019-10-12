@@ -10,6 +10,7 @@ namespace Learn_ASP.NET.Extentions
 {
     public class Extentions
     {
+        // For Excel convert
         public static DataTable ConvertCsVtoDataTable(string FilePath)
         {
             DataTable dt = new DataTable();
@@ -37,6 +38,7 @@ namespace Learn_ASP.NET.Extentions
             return dt;
         }
 
+        // For Excel convert
         public static DataTable CovertXslXtoDataTable(string FilePath, string connectionString)
         {
             OleDbConnection oleDbConnection = new OleDbConnection(connectionString);

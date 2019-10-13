@@ -6,9 +6,11 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Learn_ASP.NET.Controllers
 {
@@ -46,9 +48,23 @@ namespace Learn_ASP.NET.Controllers
             HttpCookie loginCookie = Request.Cookies["Login"];
             if(loginCookie!=null)
             {
+
+
                 string name = loginCookie.Values["Name"];
+
+                var bytes = Convert.FromBase64String(name);
+                var output = MachineKey.Unprotect(bytes, "ProtectCookie");
+                string result = Encoding.UTF8.GetString(output);
+
                 string password = loginCookie.Values["Password"];
-                var signInStatus = await SignInManager.PasswordSignInAsync(name.ToString(), password.ToString(), true, true);
+                var passBytes = Convert.FromBase64String(password);
+                var passOutput = MachineKey.Unprotect(passBytes, "ProtectCookie");
+                string passResult = Encoding.UTF8.GetString(passOutput);
+
+         
+
+
+                var signInStatus = await SignInManager.PasswordSignInAsync(result.ToString(), passResult.ToString(), true, true);
                 
                 switch(signInStatus)
                 {
@@ -74,9 +90,18 @@ namespace Learn_ASP.NET.Controllers
                     if(model.RememberMe == true)
                     {
                         HttpCookie loginCookie = new HttpCookie("Login");
+
+
+                        var cookieText = Encoding.UTF8.GetBytes(model.UserName);
+                        var encryptedValueUserName = Convert.ToBase64String(MachineKey.Protect(cookieText, "ProtectCookie"));
+                        
                         //Set the Cookie value.
-                        loginCookie.Values["Name"] = model.UserName;
-                        loginCookie.Values["Password"] = model.Password;
+                        loginCookie.Values["Name"] = encryptedValueUserName;
+
+                        var cookieTextPassword = Encoding.UTF8.GetBytes(model.Password);
+                        var encryptedValuePassword = Convert.ToBase64String(MachineKey.Protect(cookieTextPassword, "ProtectCookie"));
+
+                        loginCookie.Values["Password"] = encryptedValuePassword;
                         loginCookie.Path = Request.ApplicationPath;
                         //Set the Expiry date.
                         loginCookie.Expires = DateTime.Now.AddDays(1);
